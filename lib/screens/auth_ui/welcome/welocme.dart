@@ -1,4 +1,7 @@
 import 'package:ecomm_firebase/constant/asset_image.dart';
+import 'package:ecomm_firebase/constant/routes.dart';
+import 'package:ecomm_firebase/screens/auth_ui/login/login.dart';
+import 'package:ecomm_firebase/screens/auth_ui/signup/signup.dart';
 import 'package:ecomm_firebase/widgets/primaryButton/primary_button.dart';
 import 'package:ecomm_firebase/widgets/topTitles/toptitles.dart';
 import 'package:flutter/cupertino.dart';
@@ -60,14 +63,19 @@ class Welocome extends StatelessWidget {
                 height: 45,
               ),
               PrimaryButton(
-                onPressed: () {},
+                onPressed: () {
+                  Routes.instance.push(widget: const Login(), context: context);
+                },
                 text: "Login",
               ),
               const SizedBox(
                 height: 29,
               ),
               PrimaryButton(
-                onPressed: () {},
+                onPressed: () {
+                  Routes.instance
+                      .push(widget: const SignUp(), context: context);
+                },
                 text: "Sign up",
               ),
             ],

@@ -1,3 +1,6 @@
 {
-  "cSpell.words": ["Welcomeimage"]
+  "cSpell.words": ["Welcomeimage", "Welocome"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  }
 }

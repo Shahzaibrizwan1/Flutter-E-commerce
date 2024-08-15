@@ -12,11 +12,17 @@ class TopTitles extends StatelessWidget {
         const SizedBox(
           height: kToolbarHeight,
         ),
+        if (title == "Login" || title == "Create Account")
+          GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: Icon(Icons.arrow_back_ios)),
         Text(
           title,
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        SizedBox(
+        const SizedBox(
           height: 2,
         ),
         Text(subtitle,

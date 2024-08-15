@@ -1,7 +1,7 @@
 import 'package:ecomm_firebase/constant/theme.dart';
 import 'package:ecomm_firebase/firebase_options.dart';
 // import 'package:ecomm_firebase/myhomepage.dart';
-import 'package:ecomm_firebase/screens/auth_ui/login/welocme.dart';
+import 'package:ecomm_firebase/screens/auth_ui/welcome/welocme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
