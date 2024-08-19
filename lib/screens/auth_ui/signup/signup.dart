@@ -11,9 +11,8 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  @override
   bool showpassword = true;
-
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(),
@@ -76,7 +75,7 @@ class _SignUpState extends State<SignUp> {
               const SizedBox(
                 height: 9,
               ),
-              Center(
+              const Center(
                 child: Text(
                   "Already have an account? ",
                 ),

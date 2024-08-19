@@ -1,3 +1,7 @@
+import 'package:ecomm_firebase/constant/connstant.dart';
+import 'package:ecomm_firebase/constant/routes.dart';
+import 'package:ecomm_firebase/firebase_helper/firebase_auth_helper/firebae_auth_helper.dart';
+import 'package:ecomm_firebase/screens/home/home.dart';
 import 'package:ecomm_firebase/widgets/primaryButton/primary_button.dart';
 import 'package:ecomm_firebase/widgets/topTitles/toptitles.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,6 +17,9 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   @override
   bool showpassword = true;
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +38,7 @@ class _LoginState extends State<Login> {
               height: 45,
             ),
             TextFormField(
+              controller: emailController,
               keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
                   hintText: "Email", prefixIcon: Icon(Icons.email_outlined)),
@@ -39,6 +47,7 @@ class _LoginState extends State<Login> {
               height: 10,
             ),
             TextFormField(
+                controller: passwordController,
                 obscureText: showpassword,
                 decoration: InputDecoration(
                     hintText: "Password",
@@ -56,7 +65,20 @@ class _LoginState extends State<Login> {
             ),
             PrimaryButton(
               text: "Login",
-              onPressed: () {},
+              onPressed: () async {
+                print('Login button pressed');
+                bool isValidate = emailValidation(
+                    emailController.text, passwordController.text);
+                if (isValidate) {
+                  print('Validation passed');
+                  bool isLogined = await FirebaseAuthHelper.instance.login(
+                      emailController.text, passwordController.text, context);
+                  if (isLogined) {
+                    Routes.instance.pushAndRemoveUntil(
+                        widget: const Home(), context: context);
+                  }
+                }
+              },
             ),
             const SizedBox(
               height: 12,
