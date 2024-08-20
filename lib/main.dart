@@ -1,7 +1,9 @@
 import 'package:ecomm_firebase/constant/theme.dart';
+import 'package:ecomm_firebase/firebase_helper/firebase_auth_helper/firebae_auth_helper.dart';
 import 'package:ecomm_firebase/firebase_options.dart';
 // import 'package:ecomm_firebase/myhomepage.dart';
 import 'package:ecomm_firebase/screens/auth_ui/welcome/welocme.dart';
+import 'package:ecomm_firebase/screens/home/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -21,11 +23,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Ecommerce Shop',
-      theme: themeData,
-      home: const Welocome(),
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Ecommerce Shop',
+        theme: themeData,
+        home: StreamBuilder(
+            stream: FirebaseAuthHelper.instance.getauthChanges,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return const Home();
+              }
+              return const Welocome();
+            }));
   }
 }
 

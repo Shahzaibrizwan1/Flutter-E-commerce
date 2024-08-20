@@ -1,3 +1,6 @@
+import 'package:ecomm_firebase/constant/connstant.dart';
+import 'package:ecomm_firebase/firebase_helper/firebase_auth_helper/firebae_auth_helper.dart';
+import 'package:ecomm_firebase/screens/home/home.dart';
 import 'package:ecomm_firebase/widgets/primaryButton/primary_button.dart';
 import 'package:ecomm_firebase/widgets/topTitles/toptitles.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +15,11 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   bool showpassword = true;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController PasswordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,6 +38,7 @@ class _SignUpState extends State<SignUp> {
                 height: 4,
               ),
               TextFormField(
+                controller: nameController,
                 decoration: const InputDecoration(
                     hintText: "Name", prefixIcon: Icon(Icons.person)),
               ),
@@ -37,6 +46,7 @@ class _SignUpState extends State<SignUp> {
                 height: 4,
               ),
               TextFormField(
+                controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                     hintText: "Email", prefixIcon: Icon(Icons.email_outlined)),
@@ -45,6 +55,7 @@ class _SignUpState extends State<SignUp> {
                 height: 9,
               ),
               TextFormField(
+                controller: phoneController,
                 keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
                     hintText: "Phone", prefixIcon: Icon(Icons.phone)),
@@ -53,6 +64,7 @@ class _SignUpState extends State<SignUp> {
                 height: 9,
               ),
               TextFormField(
+                  controller: PasswordController,
                   obscureText: showpassword,
                   decoration: InputDecoration(
                       hintText: "Create Password",
@@ -70,7 +82,31 @@ class _SignUpState extends State<SignUp> {
               ),
               PrimaryButton(
                 text: "Create Account",
-                onPressed: () {},
+                onPressed: () async {
+                  bool accountvalidate = CreateAccountValidation(
+                      emailController.text,
+                      PasswordController.text,
+                      nameController.text,
+                      phoneController.text);
+                  if (accountvalidate) {
+                    bool creatAccount = await FirebaseAuthHelper.instance
+                        .CreatesAccount(
+                            emailController.text.toString(),
+                            PasswordController.text,
+                            nameController.text,
+                            phoneController.text,
+                            context);
+
+                    if (creatAccount) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Home()));
+                      showMessage("Account Created Successful");
+                    }
+                  }
+                  // Navigate to the home screen
+                },
               ),
               const SizedBox(
                 height: 9,

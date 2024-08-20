@@ -76,6 +76,7 @@ class _LoginState extends State<Login> {
                   if (isLogined) {
                     Routes.instance.pushAndRemoveUntil(
                         widget: const Home(), context: context);
+                    showMessage("Login successful");
                   }
                 }
               },

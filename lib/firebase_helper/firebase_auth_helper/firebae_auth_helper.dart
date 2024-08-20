@@ -32,4 +32,28 @@ class FirebaseAuthHelper {
       return false;
     }
   }
+
+  Future<bool> CreatesAccount(String email, String password, String name,
+      String phone, BuildContext context) async {
+    try {
+      print("Showing loading dialog...");
+      showLoadingDialog(context);
+      await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      Navigator.of(context).pop();
+      print("Login successful");
+      return true;
+//* Generic exception related to Firebase Authentication. Check the error code and message for more details.
+    } on FirebaseAuthException catch (error) {
+      Navigator.of(context).pop();
+      print('Login error: ${error.code}');
+      String errorMessage = getMessageFromErrorCode(error.code);
+      print('Error message: $errorMessage'); // Debugging line
+      showMessage(errorMessage); //
+      // Navigator.of(context).pop();
+      // showMessage(error.code.toString());
+
+      return false;
+    }
+  }
 }

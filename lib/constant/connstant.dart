@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -82,6 +84,10 @@ String getMessageFromErrorCode(String errorCode) {
 
 bool emailValidation(String email, String password) {
   print('Validating email: $email and password: $password');
+  if (email.isEmpty && password.isEmpty) {
+    showMessage("Both Fields are required");
+    return false;
+  }
   if (email.isEmpty) {
     showMessage("Email is Empty");
     print("Validation failed: Email is empty");
@@ -96,10 +102,43 @@ bool emailValidation(String email, String password) {
     return false;
   } else {
     print("Validation passed");
+
     return true;
   }
 }
 
+bool CreateAccountValidation(
+    String email, String password, String name, String phone) {
+  if (email.isEmpty && password.isEmpty && name.isEmpty && phone.isEmpty) {
+    showMessage("all Fields are required");
+    return false;
+  }
+  if (email.isEmpty) {
+    showMessage("Email is Empty");
+
+    return false;
+  } else if (!email.contains('@')) {
+    showMessage("Invalid Email");
+
+    return false;
+  } else if (password.isEmpty) {
+    showMessage("Password is Empty");
+
+    return false;
+  } else if (phone.isEmpty) {
+    showMessage("Phone Number is Empty");
+
+    return false;
+  } else if (name.isEmpty) {
+    showMessage("Name is Empty");
+
+    return false;
+  } else {
+    print("Validation passed");
+
+    return true;
+  }
+}
 // bool emailValidation(String email, String password) {
 //   if (email.isEmpty) {
 //     showMessage("Email is Empty");
