@@ -139,17 +139,3 @@ bool CreateAccountValidation(
     return true;
   }
 }
-// bool emailValidation(String email, String password) {
-//   if (email.isEmpty) {
-//     showMessage("Email is Empty");
-//     return false;
-//   } else if (!email.contains('@')) {
-//     showMessage("Invalid Email");
-//     return false;
-//   } else if (password.isEmpty) {
-//     showMessage("Password is Empty");
-//     return false;
-//   } else {
-//     return true;
-//   }
-// }
