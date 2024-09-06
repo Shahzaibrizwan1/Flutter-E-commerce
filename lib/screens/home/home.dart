@@ -1,127 +1,144 @@
+import 'package:ecomm_firebase/firebase_helper/firebase_firestore_helper/firestorehelper.dart';
+import 'package:ecomm_firebase/models/catagory%20Model/catagories.dart';
 import 'package:ecomm_firebase/models/product_model.dart';
 import 'package:ecomm_firebase/widgets/topTitles/toptitles.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  List<Product> catagories = [];
+  bool isloading = false;
+  @override
+  void initState() {
+    getcatagorieslist();
+    super.initState();
+  }
+
+  void getcatagorieslist() async {
+    setState(() {
+      isloading = true;
+    });
+    catagories = await FirebaseFirestoreHelper.instance.getCategories();
+    setState(() {
+      isloading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-      child: Column(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.all(12.0),
-                child: TopTitles(
-                  subtitle: "",
-                  title: "E Commerce",
+        body: isloading
+            ? Center(
+                child: Container(
+                  height: 100,
+                  width: 100,
+                  alignment: Alignment.center,
+                  child: const CircularProgressIndicator(),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12),
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(55.0))),
-                      hintText: "Search...."),
-                ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              const Padding(
-                padding: EdgeInsets.all(12.0),
-                child: Text(
-                  "Categories",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: CatagoriesList.map(
-                    (e) => Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Card(
-                        elevation: 3,
-                        color: Colors.white,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
+              )
+            : SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.all(12.0),
+                          child: TopTitles(
+                            subtitle: "",
+                            title: "E Commerce",
+                          ),
                         ),
-                        margin: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                            height: 99, width: 99, child: Image.network(e)),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: TextFormField(
+                            decoration: const InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(55.0))),
+                                hintText: "Search...."),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(12.0),
+                          child: Text(
+                            "Categories",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: catagories
+                                .map(
+                                  (e) => Padding(
+                                    padding: const EdgeInsets.only(left: 8),
+                                    child: Card(
+                                      elevation: 3,
+                                      color: Colors.white,
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(20)),
+                                      ),
+                                      margin: const EdgeInsets.all(8.0),
+                                      child: SizedBox(
+                                          height: 99,
+                                          width: 99,
+                                          child: Image.network(e.image)),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(12.0),
+                          child: Text(
+                            "Top Stories",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        GridView.builder(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: BestProducts.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 2 / 2,
+                            crossAxisSpacing: 5,
+                            mainAxisSpacing: 16,
+                          ),
+                          itemBuilder: (context, index) {
+                            return ProductCard(
+                              imageUrl: BestProducts[index].image,
+                              name: BestProducts[index].name,
+                              price: BestProducts[index].price,
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                      ],
                     ),
-                  ).toList(),
+                  ],
                 ),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(12.0),
-                child: Text(
-                  "Top Stories",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(height: 10),
-              GridView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: BestProducts.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 2 / 2,
-                  crossAxisSpacing: 5,
-                  mainAxisSpacing: 16,
-                ),
-                itemBuilder: (context, index) {
-                  return ProductCard(
-                    imageUrl: BestProducts[index].image,
-                    name: BestProducts[index].name,
-                    price: BestProducts[index].price,
-                  );
-                },
-              ),
-              const SizedBox(height: 20),
-            ],
-          ),
-        ],
-      ),
-    ));
+              ));
   }
 }
-
-// final List<Map<String, String>> products = [
-//   {
-//     'imageUrl': "https://img.lovepik.com/photo/45003/0454.jpg_wh860.jpg",
-//     'name': 'Smartphone',
-//     'price': '\$699'
-//   },
-//   {
-//     'imageUrl':
-//         "https://cdn.pixabay.com/photo/2013/07/13/01/22/vegetables-155616_640.png",
-//     'name': 'Wireless Headset',
-//     'price': '\$99'
-//   },
-//   {
-//     'imageUrl':
-//         "https://cdn.pixabay.com/photo/2014/12/21/23/36/burgers-575655_1280.png",
-//     'name': 'iPhone 12',
-//     'price': '\$999'
-//   },
-//   {
-//     'imageUrl':
-//         "https://cdn.pixabay.com/photo/2014/12/07/17/14/chicken-559892_640.png",
-//     'name': 'MacBook Pro',
-//     'price': '\$1299'
-//   },
-// ];
 
 class ProductCard extends StatelessWidget {
   final String imageUrl;
@@ -184,15 +201,6 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
-
-List<String> CatagoriesList = [
-  "https://cdn.pixabay.com/photo/2014/12/07/17/14/chicken-559892_640.png",
-  "https://cdn.pixabay.com/photo/2014/12/21/23/36/burgers-575655_1280.png",
-  "https://cdn.pixabay.com/photo/2013/07/13/01/22/vegetables-155616_640.png",
-  "https://cdn.pixabay.com/photo/2014/12/21/23/24/spare-ribs-575310_640.png",
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjxE-e7WnSGO8Ns6WdDYnVNYO7ecTkny51hA&s",
-  "https://img.lovepik.com/photo/45003/0454.jpg_wh860.jpg"
-];
 
 List<ProductModel> BestProducts = [
   ProductModel(

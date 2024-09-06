@@ -3,10 +3,12 @@
 import 'package:ecomm_firebase/constant/connstant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseAuthHelper {
   static FirebaseAuthHelper instance = FirebaseAuthHelper();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  // final Firestore _fetch = Firestore.instance;
   //* Notifies about changes to the user's sign-in state (such as sign-in or sign-out)
   Stream<User?> get getauthChanges => _auth.authStateChanges();
 //* Build Context is time use for loading
