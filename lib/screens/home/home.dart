@@ -13,7 +13,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<Product> catagories = [];
+  List<Product> catagorieslist = [];
+  List<ProductModel> productcatagorieslist = [];
   bool isloading = false;
   @override
   void initState() {
@@ -25,7 +26,9 @@ class _HomeState extends State<Home> {
     setState(() {
       isloading = true;
     });
-    catagories = await FirebaseFirestoreHelper.instance.getCategories();
+    catagorieslist = await FirebaseFirestoreHelper.instance.getCategories();
+    productcatagorieslist = await FirebaseFirestoreHelper.instance.TopStories();
+
     setState(() {
       isloading = false;
     });
@@ -77,45 +80,55 @@ class _HomeState extends State<Home> {
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                         ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: catagories
-                                .map(
-                                  (e) => Padding(
-                                    padding: const EdgeInsets.only(left: 8),
-                                    child: Card(
-                                      elevation: 3,
-                                      color: Colors.white,
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20)),
-                                      ),
-                                      margin: const EdgeInsets.all(8.0),
-                                      child: SizedBox(
-                                          height: 99,
-                                          width: 99,
-                                          child: Image.network(e.image)),
-                                    ),
-                                  ),
-                                )
-                                .toList(),
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.all(12.0),
-                          child: Text(
-                            "Top Stories",
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                        ),
+                        catagorieslist.isEmpty
+                            ? const Center(
+                                child: Text("Catagoris is Empty"),
+                              )
+                            : SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: catagorieslist
+                                      .map(
+                                        (e) => Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 8),
+                                          child: Card(
+                                            elevation: 3,
+                                            color: Colors.white,
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(20)),
+                                            ),
+                                            margin: const EdgeInsets.all(8.0),
+                                            child: SizedBox(
+                                                height: 99,
+                                                width: 99,
+                                                child: Image.network(e.image)),
+                                          ),
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
+                              ),
+                        productcatagorieslist.isEmpty
+                            ? const Center(
+                                child: Text("Top Stories is Empty"),
+                              )
+                            : const Padding(
+                                padding: EdgeInsets.all(12.0),
+                                child: Text(
+                                  "Top Stories",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
                         const SizedBox(height: 10),
                         GridView.builder(
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: BestProducts.length,
+                          itemCount: productcatagorieslist.length,
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
@@ -125,9 +138,9 @@ class _HomeState extends State<Home> {
                           ),
                           itemBuilder: (context, index) {
                             return ProductCard(
-                              imageUrl: BestProducts[index].image,
-                              name: BestProducts[index].name,
-                              price: BestProducts[index].price,
+                              imageUrl: productcatagorieslist[index].image,
+                              name: productcatagorieslist[index].name,
+                              price: productcatagorieslist[index].price,
                             );
                           },
                         ),
@@ -162,10 +175,14 @@ class ProductCard extends StatelessWidget {
       ),
       child: Column(
         children: [
+          const SizedBox(
+            height: 29,
+          ),
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
             child: Image.network(
               imageUrl,
+              // productcatagorieslist[index].image ?? 'default_image_url',
               height: 90,
               width: double.infinity,
               fit: BoxFit.fill,
@@ -187,7 +204,7 @@ class ProductCard extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 10,
+            height: 18,
           ),
           OutlinedButton(
               // style: const ButtonStyle(
@@ -201,66 +218,3 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
-
-List<ProductModel> BestProducts = [
-  ProductModel(
-      id: "1",
-      name: "SmartPhone",
-      image:
-          "https://cdn.pixabay.com/photo/2014/12/21/23/36/burgers-575655_1280.png",
-      description:
-          "description nrlfnr fr fr frfrnfrnfrlfn kefnrfnr fekfnerkfeknfefec ekf e",
-      price: "\$23",
-      status: "Pending",
-      isFavourite: false),
-  ProductModel(
-      id: "1",
-      name: "SmartPhone",
-      image:
-          "https://cdn.pixabay.com/photo/2014/12/21/23/36/burgers-575655_1280.png",
-      description:
-          "description nrlfnr fr fr frfrnfrnfrlfn kefnrfnr fekfnerkfeknfefec ekf e",
-      price: "\$24",
-      status: "Pending",
-      isFavourite: false),
-  ProductModel(
-      id: "1",
-      name: "SmartPhone",
-      image:
-          "https://cdn.pixabay.com/photo/2014/12/21/23/36/burgers-575655_1280.png",
-      description:
-          "description nrlfnr fr fr frfrnfrnfrlfn kefnrfnr fekfnerkfeknfefec ekf e",
-      price: "\$25",
-      status: "Pending",
-      isFavourite: false),
-  ProductModel(
-      id: "1",
-      name: "SmartPhone",
-      image:
-          "https://cdn.pixabay.com/photo/2014/12/21/23/36/burgers-575655_1280.png",
-      description:
-          "description nrlfnr fr fr frfrnfrnfrlfn kefnrfnr fekfnerkfeknfefec ekf e",
-      price: "\$26",
-      status: "Pending",
-      isFavourite: false),
-  ProductModel(
-      id: "1",
-      name: "SmartPhone",
-      image:
-          "https://cdn.pixabay.com/photo/2014/12/21/23/36/burgers-575655_1280.png",
-      description:
-          "description nrlfnr fr fr frfrnfrnfrlfn kefnrfnr fekfnerkfeknfefec ekf e",
-      price: "\$27",
-      status: "Pending",
-      isFavourite: false),
-  ProductModel(
-      id: "1",
-      name: "SmartPhone",
-      image:
-          "https://cdn.pixabay.com/photo/2014/12/21/23/36/burgers-575655_1280.png",
-      description:
-          "description nrlfnr fr fr frfrnfrnfrlfn kefnrfnr fekfnerkfeknfefec ekf e",
-      price: "\$28",
-      status: "Pending",
-      isFavourite: false),
-];

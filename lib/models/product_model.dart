@@ -24,13 +24,14 @@ class ProductModel {
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
-        id: json["id"],
-        name: json["name"],
-        image: json["image"],
-        description: json["description"],
-        price: json["price"],
-        status: json["status"],
-        isFavourite: json["isFavourite"] == false,
+        id: json["id"] ?? '',
+        name: json["name"] ?? '',
+        image: json["image"] ?? '',
+        description: json["description"] ?? '',
+        price: json["price"] ?? '',
+        status: json["status"] ?? '',
+        isFavourite: json["isFavourite"] ?? false,
+        // isFavourite: json["isFavourite"] == false,
       );
   Map<String, dynamic> toJson() => {
         "id": id,
