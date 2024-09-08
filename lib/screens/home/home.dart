@@ -1,6 +1,8 @@
+import 'package:ecomm_firebase/constant/routes.dart';
 import 'package:ecomm_firebase/firebase_helper/firebase_firestore_helper/firestorehelper.dart';
 import 'package:ecomm_firebase/models/catagory%20Model/catagories.dart';
 import 'package:ecomm_firebase/models/product_model.dart';
+import 'package:ecomm_firebase/screens/productdetails/product_details.dart';
 import 'package:ecomm_firebase/widgets/topTitles/toptitles.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -137,10 +139,12 @@ class _HomeState extends State<Home> {
                             mainAxisSpacing: 16,
                           ),
                           itemBuilder: (context, index) {
+                            final product = productcatagorieslist[index];
                             return ProductCard(
                               imageUrl: productcatagorieslist[index].image,
                               name: productcatagorieslist[index].name,
                               price: productcatagorieslist[index].price,
+                              product: product,
                             );
                           },
                         ),
@@ -157,12 +161,14 @@ class ProductCard extends StatelessWidget {
   final String imageUrl;
   final String name;
   final String price;
+  final ProductModel product;
 
   const ProductCard({
     super.key,
     required this.imageUrl,
     required this.name,
     required this.price,
+    required this.product,
   });
 
   @override
@@ -207,11 +213,16 @@ class ProductCard extends StatelessWidget {
             height: 18,
           ),
           OutlinedButton(
+
               // style: const ButtonStyle(
               //   foregroundColor: WidgetStatePropertyAll(Colors.lightBlue),
               //   // foregroundColor: WidgetStatePropertyAll(Colors.lightBlue)
               // ),
-              onPressed: () {},
+              onPressed: () {
+                Routes.instance.push(
+                    widget: ProductDescriptionScreen(product: product),
+                    context: context);
+              },
               child: const Text("Buy Now"))
         ],
       ),
