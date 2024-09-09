@@ -41,4 +41,26 @@ class FirebaseFirestoreHelper {
     }
     return [];
   }
+
+  Future<List<ProductModel>> CatagoriesView(String id) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await _firestorefirestore
+              .collection("Catagories")
+              .doc(id)
+              .collection("Products")
+              .get();
+
+      List<ProductModel> productcatagories = querySnapshot.docs
+          .map((e) => ProductModel.fromJson(e.data()))
+          .toList();
+      // return Product.fromSnapshot(doc);
+      print("Fetched products: $productcatagories");
+      return productcatagories;
+    } catch (e) {
+      print("Error getting documents: $e");
+      showMessage(e.toString());
+    }
+    return [];
+  }
 }

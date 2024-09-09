@@ -2,8 +2,10 @@ import 'package:ecomm_firebase/constant/routes.dart';
 import 'package:ecomm_firebase/firebase_helper/firebase_firestore_helper/firestorehelper.dart';
 import 'package:ecomm_firebase/models/catagory%20Model/catagories.dart';
 import 'package:ecomm_firebase/models/product_model.dart';
+import 'package:ecomm_firebase/screens/catagoryview/catagory_view.dart';
 import 'package:ecomm_firebase/screens/productdetails/product_details.dart';
 import 'package:ecomm_firebase/widgets/topTitles/toptitles.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -94,18 +96,39 @@ class _HomeState extends State<Home> {
                                         (e) => Padding(
                                           padding:
                                               const EdgeInsets.only(left: 8),
-                                          child: Card(
-                                            elevation: 3,
-                                            color: Colors.white,
-                                            shape: const RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(20)),
-                                            ),
-                                            margin: const EdgeInsets.all(8.0),
-                                            child: SizedBox(
-                                                height: 99,
-                                                width: 99,
-                                                child: Image.network(e.image)),
+                                          child: Column(
+                                            children: [
+                                              GestureDetector(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              CatagoryViewModel(
+                                                                products: e,
+                                                              )));
+                                                },
+                                                child: Card(
+                                                  elevation: 3,
+                                                  color: Colors.white,
+                                                  shape:
+                                                      const RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                20)),
+                                                  ),
+                                                  margin:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: SizedBox(
+                                                      height: 99,
+                                                      width: 99,
+                                                      child: Image.network(
+                                                          e.image)),
+                                                ),
+                                              ),
+                                              Text(e.name)
+                                            ],
                                           ),
                                         ),
                                       )
@@ -182,7 +205,7 @@ class ProductCard extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(
-            height: 29,
+            height: 5,
           ),
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
@@ -210,7 +233,7 @@ class ProductCard extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 18,
+            height: 8,
           ),
           OutlinedButton(
 
