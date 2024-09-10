@@ -1,5 +1,10 @@
+import 'package:ecomm_firebase/constant/connstant.dart';
+import 'package:ecomm_firebase/constant/routes.dart';
+import 'package:ecomm_firebase/provider/app_provider.dart';
+import 'package:ecomm_firebase/screens/cardscreen/card_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ecomm_firebase/models/product_model.dart';
+import 'package:provider/provider.dart';
 
 class ProductDescriptionScreen extends StatefulWidget {
   final ProductModel product;
@@ -109,7 +114,14 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   OutlinedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        AppProvider appProvider =
+                            Provider.of<AppProvider>(context, listen: false);
+                        appProvider.addProduct(widget.product);
+                        Routes.instance
+                            .push(widget: const CardScreen(), context: context);
+                        showMessage("Added To Cart");
+                      },
                       child: const Text(
                         "Add To Cart",
                         style: TextStyle(color: Colors.black),
