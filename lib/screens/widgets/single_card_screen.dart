@@ -16,6 +16,14 @@ class SingleCardScreen extends StatefulWidget {
 class _SingleCardScreenState extends State<SingleCardScreen> {
   int qty = 1;
   @override
+  void initState() {
+    qty = widget.product.qty ?? 1;
+    setState(() {});
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),

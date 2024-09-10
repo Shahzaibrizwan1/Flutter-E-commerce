@@ -117,7 +117,9 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                       onPressed: () {
                         AppProvider appProvider =
                             Provider.of<AppProvider>(context, listen: false);
-                        appProvider.addProduct(widget.product);
+                        ProductModel productmodel =
+                            widget.product.copyWith(qty: qty);
+                        appProvider.addProduct(productmodel);
                         Routes.instance
                             .push(widget: const CardScreen(), context: context);
                         showMessage("Added To Cart");
