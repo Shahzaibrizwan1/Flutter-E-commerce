@@ -2,6 +2,7 @@ import 'package:ecomm_firebase/constant/connstant.dart';
 import 'package:ecomm_firebase/constant/routes.dart';
 import 'package:ecomm_firebase/provider/app_provider.dart';
 import 'package:ecomm_firebase/screens/cardscreen/card_screen.dart';
+import 'package:ecomm_firebase/screens/favouriteScreen/favourite_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ecomm_firebase/models/product_model.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,9 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AppProvider appProvider = Provider.of<AppProvider>(
+      context,
+    );
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.product.name),
@@ -63,6 +67,12 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                         setState(() {
                           widget.product.isFavourite =
                               !widget.product.isFavourite;
+                          if (widget.product.isFavourite) {
+                            appProvider.addfavouriteProduct(widget.product);
+                          } else {
+                            appProvider.removeFavouriteProduct(widget.product);
+                          }
+                          //showMessage("Remove Favourite");
                         });
                       },
                       icon: Icon(widget.product.isFavourite
@@ -115,8 +125,6 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                 children: [
                   OutlinedButton(
                       onPressed: () {
-                        AppProvider appProvider =
-                            Provider.of<AppProvider>(context, listen: false);
                         ProductModel productmodel =
                             widget.product.copyWith(qty: qty);
                         appProvider.addProduct(productmodel);
@@ -131,6 +139,8 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                   const SizedBox(width: 12),
                   ElevatedButton(
                     onPressed: () {
+                      Routes.instance.push(
+                          widget: const FavouriteScreen(), context: context);
                       // Add your buy action here
                     },
                     child: const Text(

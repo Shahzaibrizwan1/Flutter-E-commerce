@@ -42,6 +42,7 @@ class _SingleCardScreenState extends State<SingleCardScreen> {
                 flex: 1,
                 child: Container(
                   child: Image.network(widget.product.image),
+
                   // decoration: const BoxDecoration(color: Colors.black),
                 )),
             Expanded(
@@ -119,8 +120,25 @@ class _SingleCardScreenState extends State<SingleCardScreen> {
                         ],
                       ),
                       CupertinoButton(
-                          onPressed: () {},
-                          child: const Text("Add To Wishlist")),
+                          onPressed: () {
+                            final appProvider = Provider.of<AppProvider>(
+                                context,
+                                listen: false);
+
+                            if (!widget.product.isFavourite) {
+                              appProvider
+                                  .removeFavouriteProduct(widget.product);
+                              showMessage("Removed from Wishlist");
+                            } else {
+                              appProvider.addfavouriteProduct(widget.product);
+                              showMessage("Added to Wishlist");
+                            }
+                          },
+                          child: Text(
+                            !widget.product.isFavourite
+                                ? "Remove from Wishlist"
+                                : "Add To Wishlist",
+                          )),
                     ],
                   ),
                 ))
