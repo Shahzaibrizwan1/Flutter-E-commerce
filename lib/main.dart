@@ -4,6 +4,7 @@ import 'package:ecomm_firebase/firebase_options.dart';
 import 'package:ecomm_firebase/provider/app_provider.dart';
 // import 'package:ecomm_firebase/myhomepage.dart';
 import 'package:ecomm_firebase/screens/auth_ui/welcome/welocme.dart';
+import 'package:ecomm_firebase/screens/coustom_bottom_bar/custom_bottom_bar.dart';
 import 'package:ecomm_firebase/screens/home/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
               stream: FirebaseAuthHelper.instance.getauthChanges,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return const Home();
+                  return const CustomNaviagtionBar();
                 }
                 return const Welocome();
               })),

@@ -37,8 +37,6 @@ class _FavouriteScreenItemState extends State<FavouriteScreenItem> {
                 flex: 1,
                 child: Container(
                   child: Image.network(widget.product.image),
-
-                  // decoration: const BoxDecoration(color: Colors.black),
                 )),
             Expanded(
                 flex: 2,
