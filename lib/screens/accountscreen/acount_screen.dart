@@ -60,8 +60,8 @@ class _AccountScreenState extends State<AccountScreen> {
                   ),
                   ElevatedButton(
                       onPressed: () {
-                        // Routes.instance.push(
-                        //     widget: const EditProfile(), context: context);
+                        Routes.instance.push(
+                            widget: const EditProfile(), context: context);
                       },
                       child: const Text(
                         "Edit Profile",

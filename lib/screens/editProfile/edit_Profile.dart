@@ -16,8 +16,17 @@ class EditProfile extends StatefulWidget {
 TextEditingController textEditingController = TextEditingController();
 
 class _EditProfileState extends State<EditProfile> {
+  // File? image;
+  // void takeimage() async {
+  //   XFile? value = await ImagePicker().pickImage(source: ImageSource.gallery);
+  //   if (value != null) {
+  //     setState(() {
+  //       image = File(value.path);
+  //     });
+  //   }
+  // }
   File? image;
-  void takeimage() async {
+  void takeImage() async {
     XFile? value = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (value != null) {
       setState(() {
@@ -49,13 +58,16 @@ class _EditProfileState extends State<EditProfile> {
               Center(
                 child: CupertinoButton(
                   onPressed: () {
-                    takeimage();
+                    takeImage();
+                    // takeimage();
                   },
                   child: CircleAvatar(
-                    radius: 50,
-                    backgroundImage: const NetworkImage("profilePictureUrl"),
+                    radius: 30,
+                    //  backgroundImage: const NetworkImage("profilePictureUrl"),
                     backgroundColor: Colors.grey[200],
-                    child: const Text('Select Image'),
+                    child: image == null
+                        ? const Icon(Icons.camera_alt)
+                        : Image.file(image!),
                   ),
                 ),
               ),
@@ -92,7 +104,7 @@ class _EditProfileState extends State<EditProfile> {
                         horizontal: 24, vertical: 12),
                   ),
                   child: const Text(
-                    'Edit Profile',
+                    'Update Profile',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
