@@ -2,12 +2,14 @@ import 'package:ecomm_firebase/constant/routes.dart';
 import 'package:ecomm_firebase/firebase_helper/firebase_firestore_helper/firestorehelper.dart';
 import 'package:ecomm_firebase/models/catagory%20Model/catagories.dart';
 import 'package:ecomm_firebase/models/product_model.dart';
+import 'package:ecomm_firebase/provider/app_provider.dart';
 import 'package:ecomm_firebase/screens/catagoryview/catagory_view.dart';
 import 'package:ecomm_firebase/screens/productdetails/product_details.dart';
 import 'package:ecomm_firebase/widgets/topTitles/toptitles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -23,6 +25,8 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     getcatagorieslist();
+    AppProvider appProvider = Provider.of<AppProvider>(context, listen: false);
+    appProvider.userinfo();
     super.initState();
   }
 

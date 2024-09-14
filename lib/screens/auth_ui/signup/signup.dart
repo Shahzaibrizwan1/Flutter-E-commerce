@@ -1,5 +1,6 @@
 import 'package:ecomm_firebase/constant/connstant.dart';
 import 'package:ecomm_firebase/firebase_helper/firebase_auth_helper/firebae_auth_helper.dart';
+import 'package:ecomm_firebase/screens/coustom_bottom_bar/custom_bottom_bar.dart';
 import 'package:ecomm_firebase/screens/home/home.dart';
 import 'package:ecomm_firebase/widgets/primaryButton/primary_button.dart';
 import 'package:ecomm_firebase/widgets/topTitles/toptitles.dart';
@@ -96,12 +97,12 @@ class _SignUpState extends State<SignUp> {
                             nameController.text,
                             phoneController.text,
                             context);
-
                     if (creatAccount) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const Home()));
+                              builder: (context) =>
+                                  const CustomNaviagtionBar()));
                       showMessage("Account Created Successful");
                     }
                   }

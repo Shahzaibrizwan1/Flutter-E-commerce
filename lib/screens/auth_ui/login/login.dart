@@ -1,6 +1,7 @@
 import 'package:ecomm_firebase/constant/connstant.dart';
 import 'package:ecomm_firebase/constant/routes.dart';
 import 'package:ecomm_firebase/firebase_helper/firebase_auth_helper/firebae_auth_helper.dart';
+import 'package:ecomm_firebase/screens/coustom_bottom_bar/custom_bottom_bar.dart';
 import 'package:ecomm_firebase/screens/home/home.dart';
 import 'package:ecomm_firebase/widgets/primaryButton/primary_button.dart';
 import 'package:ecomm_firebase/widgets/topTitles/toptitles.dart';
@@ -75,7 +76,7 @@ class _LoginState extends State<Login> {
                       emailController.text, passwordController.text, context);
                   if (isLogined) {
                     Routes.instance.pushAndRemoveUntil(
-                        widget: const Home(), context: context);
+                        widget: const CustomNaviagtionBar(), context: context);
                     showMessage("Login successful");
                   }
                 }

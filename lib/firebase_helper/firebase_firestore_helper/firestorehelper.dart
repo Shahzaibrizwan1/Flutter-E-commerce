@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecomm_firebase/constant/connstant.dart';
+import 'package:ecomm_firebase/models/UserModel/user_model.dart';
 import 'package:ecomm_firebase/models/catagory%20Model/catagories.dart';
 import 'package:ecomm_firebase/models/product_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseFirestoreHelper {
   static FirebaseFirestoreHelper instance = FirebaseFirestoreHelper();
@@ -62,5 +66,16 @@ class FirebaseFirestoreHelper {
       showMessage(e.toString());
     }
     return [];
+  }
+
+  Future<UserModel> getuserdetails() async {
+    // QuerySnapshot<Map<String, dynamic>> querySnapshot = await _firestorefirestore.collection("Users").doc(userId).get();
+    DocumentSnapshot<Map<String, dynamic>> querySnapshot =
+        await _firestorefirestore
+            .collection("User")
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .get();
+
+    return UserModel.fromJson(querySnapshot.data()!);
   }
 }

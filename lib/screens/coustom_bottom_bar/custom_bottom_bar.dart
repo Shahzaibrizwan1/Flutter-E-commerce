@@ -1,3 +1,4 @@
+import 'package:ecomm_firebase/screens/accountscreen/acount_screen.dart';
 import 'package:ecomm_firebase/screens/favouriteScreen/favourite_screen.dart';
 import 'package:ecomm_firebase/screens/home/home.dart';
 import "package:flutter/material.dart";
@@ -41,7 +42,7 @@ class _CustomNaviagtionBarState extends State<CustomNaviagtionBar> {
         const Home(),
         const FavouriteScreen(),
         const FavouriteScreen(),
-        const FavouriteScreen(),
+        const AccountScreen(),
       ];
 
   // Color? _getSecondaryItemColorForSpecificStyles() =>
@@ -99,10 +100,6 @@ class _CustomNaviagtionBarState extends State<CustomNaviagtionBar> {
 
   @override
   Widget build(final BuildContext context) => Scaffold(
-        // appBar: AppBar(
-        //   title: const Text("Navigation Bar Demo"),
-        //   backgroundColor: Colors.grey.shade900,
-        // ),
         body: PersistentTabView(
           context,
           controller: _controller,
@@ -118,19 +115,6 @@ class _CustomNaviagtionBarState extends State<CustomNaviagtionBar> {
             scrollControllers: _scrollControllers,
           ),
           padding: const EdgeInsets.only(top: 8),
-          // floatingActionButton: IconButton(
-          //   icon: Container(
-          //     padding: const EdgeInsets.all(12),
-          //     decoration: const BoxDecoration(
-          //         shape: BoxShape.circle, color: Colors.orange),
-          //     child: const Icon(
-          //       Icons.add,
-          //       color: Colors.white,
-          //     ),
-          //   ),
-          //   onPressed: () {},
-          // ),
-
           backgroundColor: Colors.white,
           isVisible: !_hideNavBar,
           animationSettings: const NavBarAnimationSettings(
@@ -144,11 +128,11 @@ class _CustomNaviagtionBarState extends State<CustomNaviagtionBar> {
               animateTabTransition: true,
               duration: Duration(milliseconds: 300),
               screenTransitionAnimationType:
-                  ScreenTransitionAnimationType.fadeIn,
+                  ScreenTransitionAnimationType.slide,
             ),
             onNavBarHideAnimation: OnHideAnimationSettings(
               duration: Duration(milliseconds: 100),
-              curve: Curves.bounceInOut,
+              curve: Curves.linear,
             ),
           ),
           confineToSafeArea: true,
