@@ -51,7 +51,6 @@ class FirebaseAuthHelper {
           name: name,
           email: email,
           phone: phone);
-
       _firestore.collection("User").doc(userModel.id).set(userModel.toJson());
       Navigator.of(context).pop();
 

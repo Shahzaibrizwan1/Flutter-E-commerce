@@ -12,7 +12,6 @@ class AppProvider with ChangeNotifier {
   //*  cart screen add  function
   void addProduct(ProductModel productmodel) {
     _cartList.add(productmodel);
-
     notifyListeners();
   }
 

@@ -36,5 +36,16 @@ class UserModel {
     };
   }
 
-  static fromSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> doc) {}
+  @override
+  UserModel copyWith({
+    String? name,
+    image,
+  }) =>
+      UserModel(
+        id: id,
+        name: name ?? this.name,
+        image: image ?? this.image,
+        email: email,
+        phone: phone,
+      );
 }
