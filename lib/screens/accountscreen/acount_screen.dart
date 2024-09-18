@@ -6,6 +6,7 @@ import 'package:ecomm_firebase/models/UserModel/user_model.dart';
 import 'package:ecomm_firebase/provider/app_provider.dart';
 import 'package:ecomm_firebase/screens/auth_ui/signup/signup.dart';
 import 'package:ecomm_firebase/screens/editProfile/edit_Profile.dart';
+import 'package:ecomm_firebase/screens/order_screen/order_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,13 +19,7 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  // UserModel? _userModel;
-  // @override
-  // void initState() {
-  //   userinfo();
-  //   super.initState();
-  // }
-
+  @override
   @override
   Widget build(BuildContext context) {
     AppProvider appProvider = Provider.of<AppProvider>(
@@ -45,15 +40,21 @@ class _AccountScreenState extends State<AccountScreen> {
                           Icons.person,
                           size: 59,
                         )
-                      : const Icon(
-                          Icons.person,
-                          size: 59,
+                      : ClipOval(
+                          child: Image.network(
+                            appProvider.getUserInformation.image!,
+                            width: 140, // Double the radius
+                            height: 140, // Double the radius
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                  // : Image.network(
-                  //     appProvider.getUserInformation.image!,
-                  //     // fit: BoxFit.cover,
-                  //   ),
+                  const SizedBox(
+                    height: 14,
+                  ),
                   Text(appProvider.getUserInformation.name),
+                  const SizedBox(
+                    height: 14,
+                  ),
                   Text(appProvider.getUserInformation.email),
                   const SizedBox(
                     height: 14,
@@ -70,12 +71,15 @@ class _AccountScreenState extends State<AccountScreen> {
                 ],
               ))),
           Expanded(
-              flex: 2,
+              flex: 1,
               child: Container(
                 child: Column(
                   children: [
                     ListTile(
-                      onTap: () {},
+                      onTap: () {
+                        Routes.instance.push(
+                            widget: const OrderScreen(), context: context);
+                      },
                       leading: const Icon(Icons.shopping_bag_outlined),
                       title: const Text("Your Order"),
                     ),

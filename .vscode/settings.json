@@ -2,5 +2,6 @@
   "cSpell.words": ["firestorefirestore", "Welcomeimage", "Welocome"],
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"
-  }
+  },
+  "Codegeex.SidebarUI.LanguagePreference": "English"
 }

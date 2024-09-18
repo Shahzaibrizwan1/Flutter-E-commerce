@@ -1,5 +1,7 @@
 import 'package:ecomm_firebase/constant/connstant.dart';
+import 'package:ecomm_firebase/constant/routes.dart';
 import 'package:ecomm_firebase/firebase_helper/firebase_auth_helper/firebae_auth_helper.dart';
+import 'package:ecomm_firebase/screens/auth_ui/login/login.dart';
 import 'package:ecomm_firebase/screens/coustom_bottom_bar/custom_bottom_bar.dart';
 import 'package:ecomm_firebase/screens/home/home.dart';
 import 'package:ecomm_firebase/widgets/primaryButton/primary_button.dart';
@@ -122,7 +124,10 @@ class _SignUpState extends State<SignUp> {
               ),
               Center(
                 child: CupertinoButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Routes.instance
+                        .push(widget: const Login(), context: context);
+                  },
                   child: Text(
                     "Login",
                     style: TextStyle(color: Theme.of(context).primaryColor),

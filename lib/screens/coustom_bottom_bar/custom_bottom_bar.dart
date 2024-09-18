@@ -1,6 +1,7 @@
 import 'package:ecomm_firebase/screens/accountscreen/acount_screen.dart';
 import 'package:ecomm_firebase/screens/favouriteScreen/favourite_screen.dart';
 import 'package:ecomm_firebase/screens/home/home.dart';
+import 'package:ecomm_firebase/screens/order_screen/order_screen.dart';
 import "package:flutter/material.dart";
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
@@ -41,7 +42,7 @@ class _CustomNaviagtionBarState extends State<CustomNaviagtionBar> {
   List<Widget> _buildScreens() => [
         const Home(),
         const FavouriteScreen(),
-        const FavouriteScreen(),
+        const OrderScreen(),
         const AccountScreen(),
       ];
 
