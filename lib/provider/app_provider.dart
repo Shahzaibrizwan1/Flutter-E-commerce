@@ -88,4 +88,26 @@ class AppProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  double totalprice() {
+    double totalprice = 0.0;
+    for (var element in _cartList) {
+      totalprice += element.price * element.qty!;
+    }
+    return totalprice;
+  }
+
+  /// This function is used to update the quantity of a product in the cart list.
+  ///
+  /// It takes a [ProductModel] and an integer [qty] as parameters.
+  ///
+  /// It finds the index of the [ProductModel] in the [_cartList] and updates the quantity of the product at that index.
+  ///
+  /// After updating the quantity, it calls the [notifyListeners] function to notify the widgets that are listening to the changes.
+// It finds the index of the product in the _cartList, updates the quantity at that index, and then notifies any listeners that the data has changed.
+  void updateqty(ProductModel productmodel, int qty) {
+    int index = _cartList.indexOf(productmodel);
+    _cartList[index].qty = qty;
+    notifyListeners();
+  }
 }

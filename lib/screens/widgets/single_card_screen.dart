@@ -25,6 +25,9 @@ class _SingleCardScreenState extends State<SingleCardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AppProvider appProvider = Provider.of<AppProvider>(
+      context,
+    );
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Container(
@@ -42,7 +45,6 @@ class _SingleCardScreenState extends State<SingleCardScreen> {
                 flex: 1,
                 child: Container(
                   child: Image.network(widget.product.image),
-
                   // decoration: const BoxDecoration(color: Colors.black),
                 )),
             Expanded(
@@ -61,7 +63,7 @@ class _SingleCardScreenState extends State<SingleCardScreen> {
                               widget.product.name,
                               style: const TextStyle(fontSize: 12),
                             ),
-                            Text("\$${widget.product.price}",
+                            Text("\$${widget.product.price.toString()}",
                                 style: const TextStyle(fontSize: 12)),
                           ],
                         ),
@@ -74,6 +76,7 @@ class _SingleCardScreenState extends State<SingleCardScreen> {
                                 if (qty >= 1) qty--;
                                 print("$qty");
                               });
+                              appProvider.updateqty(widget.product, qty);
                             },
                             child: const CircleAvatar(
                               radius: 15,
@@ -84,7 +87,7 @@ class _SingleCardScreenState extends State<SingleCardScreen> {
                             width: 5,
                           ),
                           Text(
-                            "$qty",
+                            "$qty.",
                             style: const TextStyle(fontSize: 18),
                             textAlign: TextAlign.center,
                           ),
@@ -97,6 +100,7 @@ class _SingleCardScreenState extends State<SingleCardScreen> {
                                 qty++;
                                 print("$qty");
                               });
+                              appProvider.updateqty(widget.product, qty);
                             },
                             child: const CircleAvatar(
                               radius: 15,

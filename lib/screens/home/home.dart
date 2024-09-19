@@ -170,7 +170,8 @@ class _HomeState extends State<Home> {
                             return ProductCard(
                               imageUrl: productcatagorieslist[index].image,
                               name: productcatagorieslist[index].name,
-                              price: productcatagorieslist[index].price,
+                              price:
+                                  productcatagorieslist[index].price.toString(),
                               product: product,
                             );
                           },

@@ -82,7 +82,7 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
               ),
               const SizedBox(height: 8),
               Text(
-                widget.product.price,
+                widget.product.price.toString(),
                 style: const TextStyle(fontSize: 20, color: Colors.green),
               ),
               const SizedBox(height: 16),

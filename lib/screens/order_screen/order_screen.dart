@@ -1,4 +1,6 @@
+import 'package:ecomm_firebase/provider/app_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class OrderScreen extends StatefulWidget {
   const OrderScreen({super.key});
@@ -21,6 +23,7 @@ class _OrderScreenState extends State<OrderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AppProvider appProvider = Provider.of<AppProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Order Screen'),
@@ -104,7 +107,7 @@ class _OrderScreenState extends State<OrderScreen> {
                   const Text('Total Price:'),
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0),
-                    child: Text('\$$_totalPrice'),
+                    child: Text('\$${appProvider.totalprice()}'),
                   ),
                 ],
               ),

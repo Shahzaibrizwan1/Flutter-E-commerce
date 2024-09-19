@@ -9,7 +9,7 @@ class ProductModel {
   String name;
   String image;
   String description;
-  String price;
+  double price;
   String status;
   bool isFavourite;
   int? qty;
@@ -30,7 +30,9 @@ class ProductModel {
         name: json["name"] ?? '',
         image: json["image"] ?? '',
         description: json["description"] ?? '',
-        price: json["price"] ?? '',
+
+        price: double.tryParse(json["price"].toString()) ?? 0.0,
+
         status: json["status"] ?? '',
         qty: json["qty"] ?? 0,
         isFavourite: json["isFavourite"] ?? false,
