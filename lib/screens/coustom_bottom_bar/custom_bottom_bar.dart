@@ -42,7 +42,7 @@ class _CustomNaviagtionBarState extends State<CustomNaviagtionBar> {
   List<Widget> _buildScreens() => [
         const Home(),
         const FavouriteScreen(),
-        const OrderScreen(),
+        const FavouriteScreen(),
         const AccountScreen(),
       ];
 

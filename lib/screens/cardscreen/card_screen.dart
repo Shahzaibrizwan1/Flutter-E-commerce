@@ -1,5 +1,6 @@
 import 'package:ecomm_firebase/constant/routes.dart';
 import 'package:ecomm_firebase/provider/app_provider.dart';
+import 'package:ecomm_firebase/screens/favouriteScreen/favourite_screen.dart';
 import 'package:ecomm_firebase/screens/order_screen/order_screen.dart';
 import 'package:ecomm_firebase/screens/widgets/single_card_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -43,8 +44,8 @@ class _CardScreenState extends State<CardScreen> {
                 padding: const EdgeInsets.only(top: 20.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    Routes.instance
-                        .push(widget: const OrderScreen(), context: context);
+                    Routes.instance.push(
+                        widget: const FavouriteScreen(), context: context);
                   },
                   child: const Text(
                     'Place Order',

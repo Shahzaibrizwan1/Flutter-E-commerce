@@ -1,9 +1,14 @@
+import 'package:ecomm_firebase/constant/routes.dart';
+import 'package:ecomm_firebase/firebase_helper/firebase_firestore_helper/firestorehelper.dart';
+import 'package:ecomm_firebase/models/product_model.dart';
 import 'package:ecomm_firebase/provider/app_provider.dart';
+import 'package:ecomm_firebase/screens/coustom_bottom_bar/custom_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class OrderScreen extends StatefulWidget {
-  const OrderScreen({super.key});
+  final ProductModel product;
+  const OrderScreen({super.key, required this.product});
 
   @override
   _OrderScreenState createState() => _OrderScreenState();
@@ -11,8 +16,8 @@ class OrderScreen extends StatefulWidget {
 
 class _OrderScreenState extends State<OrderScreen> {
   int _selectedItem = 0;
-  final int _totalItems = 0;
-  final double _totalPrice = 0.0;
+  // final int _totalItems = 0;
+  // final double _totalPrice = 0.0;
 
   // void _updateTotal() {
   //   setState(() {
@@ -88,23 +93,26 @@ class _OrderScreenState extends State<OrderScreen> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: Row(
-                children: [
-                  const Text('Total Items:'),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0),
-                    child: Text('$_totalItems'),
-                  ),
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 20.0),
+            //   child: Row(
+            //     children: [
+            //       const Text('Total Items:'),
+            //       Padding(
+            //         padding: const EdgeInsets.only(left: 16.0),
+            //         child: Text('$_totalItems'),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Total Price:'),
+                  const Text(
+                    'Total Price:',
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0),
                     child: Text('\$${appProvider.totalprice()}'),
@@ -115,8 +123,29 @@ class _OrderScreenState extends State<OrderScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 20.0),
               child: ElevatedButton(
-                onPressed: () {},
-                child: const Text('Place Order'),
+                onPressed: () async {
+                  // appProvider.getbuyProductList.clear();
+                  appProvider.addbuyProduct(widget.product);
+                  bool value = await FirebaseFirestoreHelper.instance
+                      .orderuploadProductFirebase(
+                          appProvider.getbuyProductList,
+                          context,
+                          _selectedItem == 0
+                              ? "Pay Online"
+                              : "Cash on Delivery");
+                  appProvider.getbuyProductList.clear();
+                  if (value) {
+                    Future.delayed(const Duration(seconds: 2), () {
+                      Routes.instance.push(
+                          widget: const CustomNaviagtionBar(),
+                          context: context);
+                    });
+                  }
+                },
+                child: const Text(
+                  'Continue',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
           ],

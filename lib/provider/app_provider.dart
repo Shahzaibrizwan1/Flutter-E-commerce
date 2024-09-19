@@ -12,6 +12,8 @@ import 'package:provider/provider.dart';
 class AppProvider with ChangeNotifier {
   // Declare a list of ProductModel to store the cart items
   final List<ProductModel> _cartList = [];
+  final List<ProductModel> _buyList = [];
+
   // Declare a UserModel to store the user information
   UserModel? _userModel;
   // Getter to return the user information
@@ -110,4 +112,11 @@ class AppProvider with ChangeNotifier {
     _cartList[index].qty = qty;
     notifyListeners();
   }
+
+  void addbuyProduct(ProductModel model) {
+    _buyList.add(model);
+    notifyListeners();
+  }
+
+  List<ProductModel> get getbuyProductList => _buyList;
 }

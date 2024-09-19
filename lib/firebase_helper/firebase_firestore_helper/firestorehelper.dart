@@ -6,6 +6,7 @@ import 'package:ecomm_firebase/models/UserModel/user_model.dart';
 import 'package:ecomm_firebase/models/catagory%20Model/catagories.dart';
 import 'package:ecomm_firebase/models/product_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class FirebaseFirestoreHelper {
   // Create an instance of the class
@@ -90,5 +91,42 @@ class FirebaseFirestoreHelper {
 
     // Map the document to a UserModel object
     return UserModel.fromJson(querySnapshot.data()!);
+  }
+
+  /// Uploads the order to the database
+  ///
+  /// This function takes a list of ProductModel objects and uploads them to the
+  /// "UserOrder" collection in the Firestore database. It will also calculate
+  /// the total price of all the products in the list and add it to the document.
+  ///
+  /// If there is an error, it will return false. Otherwise, it will return true.
+  Future<bool> orderuploadProductFirebase(
+      List<ProductModel> list, context, String payment) async {
+    try {
+      showLoadingDialog(context);
+      double totalPrice = 0.0;
+      for (var element in list) {
+        totalPrice += element.price * element.qty!;
+      }
+      DocumentReference documentReference = _firestorefirestore
+          .collection("UserOrder")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("Order")
+          .doc();
+      documentReference.set({
+        "Products": list.map((e) => e.toJson()),
+        "status": "pending",
+        "totalPrice": totalPrice,
+        "payment": payment,
+      });
+      Navigator.of(context, rootNavigator: true).pop();
+      showMessage("Order Place Successfully");
+      return true;
+    } catch (e) {
+      showMessage(e.toString());
+      Navigator.of(context, rootNavigator: true).pop();
+
+      return false;
+    }
   }
 }
